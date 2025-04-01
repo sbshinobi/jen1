@@ -6,5 +6,10 @@ def test_hello_world():
     assert hello_world() == "1234","values didn't match"
 
 if __name__ == "__main__":
-    pytest.main()
+    try:
+        test_hello_world()
+        print("Tests passed, fam!")
+    except AssertionError as e:
+        print(f"Test flopped: {e}")
+        exit(1)
 
