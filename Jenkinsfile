@@ -10,12 +10,14 @@ pipeline{
         stage ("Test"){
             steps{
             sh "echo 'Testing the application' "
-            sh "python3 test_hello.py"
+            sh "python3 test_hello.py > output.txt"
             }
         }
         stage ("Deploy"){
             steps{
             sh "echo 'Deploying the application'"
+            sh "copy output.txt deployed.txt"
+            sh "cat deployed.txt"
         }
     }
 }
