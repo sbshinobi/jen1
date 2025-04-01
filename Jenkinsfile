@@ -4,20 +4,20 @@ pipeline{
         stage ("Build"){
             steps{
             sh "echo 'Building the application'"
-            sh "python3 hello.py"
+            sh "docker build -t hello-world ."
             }
         }
         stage ("Test"){
             steps{
             sh "echo 'Testing the application' "
-            sh "python3 test_hello.py > output.txt"
+            sh "docker run hello-world python test.py"
             }
         }
         stage ("Deploy"){
             steps{
             sh "echo 'Deploying the application'"
-            sh "cp output.txt deployed.txt"
-            sh "cat deployed.txt"
+            sh "docker run -d --name hello-world-container hello-world"
+            sh "docker logs hello-world-container"
         }
     }
 }
