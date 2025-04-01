@@ -16,7 +16,7 @@ pipeline{
         stage ("Deploy"){
             steps{
             sh "echo 'Deploying the application'"
-            sh "copy output.txt deployed.txt"
+            sh "cp output.txt deployed.txt"
             sh "cat deployed.txt"
         }
     }
