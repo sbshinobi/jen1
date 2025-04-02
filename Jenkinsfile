@@ -10,7 +10,7 @@ pipeline{
         stage ("Test"){
             steps{
             sh "echo 'Testing the application' "
-            sh "docker run hello-world python test.py"
+            sh "docker run hello-world python test_hello.py"
             }
         }
         stage ("Deploy"){
