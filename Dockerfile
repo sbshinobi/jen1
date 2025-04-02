@@ -1,9 +1,11 @@
-FROM python3:alpine
+FROM python:3-alpine  
 
-WORKDIR /app
+WORKDIR /app  
 
-COPY . .
+COPY . . 
 
-RUN pip install -r requirements.txt
+# ✅ Install system dependencies (if needed) and Python packages
+RUN apk add --no-cache gcc musl-dev python3-dev \
+    && pip install --no-cache-dir -r requirements.txt  
 
-CMD ["python3", "test_hello.py"]
+CMD ["python", "test_hello.py"]  # ✅ Use "python" instead of "python3"
