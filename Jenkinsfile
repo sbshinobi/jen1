@@ -20,5 +20,12 @@ pipeline{
             sh "docker logs hello-world-container"
         }
     }
+        stage ("Push"){
+            steps{
+            sh "echo 'Pushing the application'"
+            sh "docker login -u shinobisar  -p @Kyubataun@123"
+            sh "docker push shinobisar/hello-world:latest"
+            }
+        }
 }
 }
