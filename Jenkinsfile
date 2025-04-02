@@ -23,11 +23,13 @@ pipeline{
         stage ("Push"){
             steps{
             sh "echo 'Pushing the application'"
-            withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+            withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS',  usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASS')]) {
+                script{
                 sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                sh "docker push shinobisar/hello-world:latest"
+                sh 'docker tag hello-world:latest $DOCKER_USER/hello-world:latest'
+                sh "docker push $DOCKER_USER/hello-world:latest"
             }
-            
+            }
             }
         }
 }
