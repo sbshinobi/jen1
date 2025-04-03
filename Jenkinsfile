@@ -7,7 +7,7 @@ pipeline{
         stage ("Build"){
             steps{
             sh "echo 'Building the application'"
-            sh "docker build -t hello-world ."
+            sh "docker build -t hello-world:${DOCKER_TAG} ."
             }
         }
         stage ("Test"){
