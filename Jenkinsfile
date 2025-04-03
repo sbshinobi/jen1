@@ -33,6 +33,9 @@ pipeline{
         stage('Deploy'){
             steps{
                 script{
+                    sh 'pwd'  // Prints current directory
+                    sh 'ls -la'  // Lists files in that dir
+                    sh 'ls -la /home/ubuntu/.ansible/ || echo "Dir not found"'
                     sh "ansible-playbook -i /home/ubuntu/.ansible/hosts /home/ubuntu/.ansible/deploy.yml -e 'docker_tag=${DOCKER_TAG}'"
                 }
             }
