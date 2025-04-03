@@ -13,7 +13,7 @@ pipeline{
         stage ("Test"){
             steps{
             sh "echo 'Testing the application' "
-            sh "docker run hello-world python test_hello.py"
+            sh "docker run hello-world:${DOCKER_TAG} python test_hello.py"
             }
         }
         
