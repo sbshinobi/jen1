@@ -1,0 +1,17 @@
+- name: Deploy Docker app to EC2 instances
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Ensure Docker is installed
+      apt: { name: docker.io, state: present }
+    - name: Add user to docker group
+      user: { name: ubuntu, groups: docker, append: yes }
+    - name: Pull and run Docker container
+      docker_container:
+        name: my-app-container
+        image: "{{ docker_user }}/my-app:{{ docker_tag }}"
+        state: started
+        restart_policy: always
+        ports: "80:80"
+      vars:
+        docker_user: shinobisar
