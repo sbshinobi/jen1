@@ -33,7 +33,7 @@ pipeline{
         stage('Deploy'){
             steps{
                 script{
-                    sh "ansible-playbook -i /home/ubuntu/ansible/hosts /home/ubuntu/ansible/deploy.yaml -e 'docker_tag=${DOCKER_TAG}'"
+                    sh "ansible-playbook -i /home/ubuntu/.ansible/hosts /home/ubuntu/.ansible/deploy.yml -e 'docker_tag=${DOCKER_TAG}'"
                 }
             }
         }
