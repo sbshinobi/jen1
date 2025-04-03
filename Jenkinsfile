@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment{
+        DOCKER_TAG = "${env.BUILD_NUMBER}"
+    }
     stages{
         stage ("Build"){
             steps{
@@ -13,23 +16,25 @@ pipeline{
             sh "docker run hello-world python test_hello.py"
             }
         }
-        stage ("Deploy"){
-            steps{
-            sh "echo 'Deploying the application'"
-            sh "docker run -d --name hello-world-container hello-world"
-            sh "docker logs hello-world-container"
-        }
-    }
+        
         stage ("Push"){
             steps{
             sh "echo 'Pushing the application'"
             withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS',  usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASS')]) {
                 script{
                 sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                sh 'docker tag hello-world:latest $DOCKER_USER/hello-world:latest'
-                sh "docker push $DOCKER_USER/hello-world:latest"
+                sh 'docker tag hello-world:${DOCKER_TAG} $DOCKER_USER/hello-world:${DOCKER_TAG}'
+                sh "docker push $DOCKER_USER/hello-world:${DOCKER_TAG}"
+
             }
             }
+            }
+        }
+        stage('Deploy'){
+            steps{
+                script{
+                    sh "ansible-playbook -i /home/ubuntu/ansible/hosts /home/ubuntu/ansible/deploy.yaml -e 'docker_tag=${DOCKER_TAG}'"
+                }
             }
         }
 }
