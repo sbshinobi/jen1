@@ -6,7 +6,7 @@ pipeline {
         stage('Test') { steps { sh "docker run my-app:${DOCKER_TAG} python test_hello.py" } }
         stage('Push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', 
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', 
                                                  usernameVariable: 'DOCKER_USER', 
                                                  passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
