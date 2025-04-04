@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', 
+                withCredentials([usernamePassword(credentialsId: '', 
                                                  usernameVariable: 'DOCKER_USER', 
                                                  passwordVariable: 'DOCKER_PASS')]) {
                     sh "ansible-playbook -i ansible/hosts ansible/deploy.yml -e 'docker_tag=${DOCKER_TAG} DOCKER_PASS=${DOCKER_PASS}'"
