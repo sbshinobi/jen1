@@ -6,7 +6,7 @@ pipeline {
       //  stage('Test') { steps { sh "docker run my-app:${DOCKER_TAG} python test.py" } }
         stage('Push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDeNTIALS', 
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', 
                                                  usernameVariable: 'DOCKER_USER', 
                                                  passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDeNTIALS', 
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', 
                                                  usernameVariable: 'DOCKER_USER', 
                                                  passwordVariable: 'DOCKER_PASS')]) {
                     sh "ansible-playbook -i ansible/hosts ansible/deploy.yml -e 'docker_tag=${DOCKER_TAG} DOCKER_PASS=${DOCKER_PASS}'"
