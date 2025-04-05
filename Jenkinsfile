@@ -16,7 +16,7 @@ pipeline {
         // }
         stage('Push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'DOCKER-HUB-CREDENTIALS', 
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', 
                                                  usernameVariable: 'DOCKER_USER', 
                                                  passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Deploy') {
             environment { 
-                DOCKER_PASS_ENV = credentials('DOCKER-HUB-CREDENTIALS') // Use secret directly
+                DOCKER_PASS_ENV = credentials('DOCKER_HUB_CREDENTIALS') // Use secret directly
             }
             steps {
                 sh 'ansible-playbook -i ansible/hosts ansible/deploy.yml -e "docker_tag=${DOCKER_TAG} DOCKER_PASS=${DOCKER_PASS_ENV}"'
