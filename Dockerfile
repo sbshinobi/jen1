@@ -4,6 +4,5 @@ WORKDIR /app
 
 COPY . .
 
-RUN  pip install pytest
 
-CMD ["python3", "test_hello.py"]
+CMD ["python", "app.py"]
