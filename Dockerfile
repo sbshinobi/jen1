@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN  pip install --no-cache-dir -r requirements.txt
+RUN  pip install pytest
 
-CMD ["python", "test_hello.py"]
+CMD ["python3", "test_hello.py"]
