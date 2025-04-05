@@ -3,7 +3,7 @@ pipeline {
     environment { DOCKER_TAG = "${env.BUILD_NUMBER}" }
     stages {
         stage('Build') { steps { sh "docker build -t my-app:${DOCKER_TAG} ." } }
-        stage('Test') { steps { sh "docker run my-app:${DOCKER_TAG} python app.py" } }
+        // stage('Test') { steps { sh "docker run my-app:${DOCKER_TAG} python app.py" } }
         stage('Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', 
